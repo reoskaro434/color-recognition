@@ -1,5 +1,6 @@
 # User files
 pictures/
+color_recognizer_app/Lib
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
