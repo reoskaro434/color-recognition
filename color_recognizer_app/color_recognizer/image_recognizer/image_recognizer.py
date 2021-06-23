@@ -11,16 +11,15 @@ class ImageRecognizer(ImageRecognizerInterface):
 
     def _get_color_name(self, color_vector) -> str:
 
-        is_one = False
-        argument = -1
+        max_val_index = -1
+        max_val = 0
         for idx, val in enumerate(color_vector[0]):
-            if val == 1:
-                if not is_one:
-                    is_one = True
-                    argument = idx
-                else:
-                    argument = -1
-                    break
+            if max_val < val:
+                max_val_index = idx
+                max_val = val
+
+        if max_val == 0:
+            max_val_index = -1
 
         color_descriptor = {
             0: "black",
@@ -33,8 +32,9 @@ class ImageRecognizer(ImageRecognizerInterface):
             7: "white",
             8: "yellow"
         }
-
-        return color_descriptor.get(argument, "color not recognized")
+        print("VECTOR:")
+        print(color_vector)
+        return color_descriptor.get(max_val_index, "color not recognized")
 
     def recognize_image(self, image_path) -> str:
         current_image = tf.keras.preprocessing.image.load_img(
